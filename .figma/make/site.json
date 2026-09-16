@@ -1,0 +1,10 @@
+{
+  "description": "Discover a subscription-based art club that delivers curated painting kits monthly, perfect for art enthusiasts looking to explore their creativity.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
