@@ -881,14 +881,14 @@ export default function App() {
             <h4 style={{ fontFamily: "'Fredoka', sans-serif", color: '#e8a046', fontSize: '1.05rem', fontWeight: 700, marginBottom: '1rem' }}>Contato</h4>
             <div style={{ color: '#6a9162', fontSize: '0.87rem', fontWeight: 600, lineHeight: 2 }}>
               <p>contato@vitorio.art</p>
-              <p>@vitorio.art</p>
-              <p>São Paulo, Brasil</p>
+              <p>@arte.vitorio</p>
+              <p>Rio de Janeiro, Brasil</p>
             </div>
           </div>
         </div>
         <div className="max-w-5xl mx-auto mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2"
           style={{ borderTop: '1px solid #1d2e19' }}>
-          <span style={{ color: '#2a4224', fontSize: '0.78rem', fontWeight: 600 }}>© 2025 Vitório. Todos os direitos reservados.</span>
+          <span style={{ color: '#2a4224', fontSize: '0.78rem', fontWeight: 600 }}>© 2026 Vitório. Todos os direitos reservados.</span>
           <span style={{ color: '#2a4224', fontSize: '0.78rem', fontWeight: 600 }}>Arte original, entrega mensal. 🎨</span>
         </div>
       </footer>
