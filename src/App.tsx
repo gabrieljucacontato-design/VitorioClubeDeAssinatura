@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import logoImg from '@/imports/logo.png'
 import mascotImg from '@/imports/Gemini_Generated_Image_7jvq1c7jvq1c7jvq_copiar.png'
+import { ART_STYLES, plans, paintings, type Painting, type Plan } from '@/data/catalog'
+import CheckoutModal from '@/components/CheckoutModal'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -13,31 +15,6 @@ interface CartItem {
   detail?: string
 }
 
-interface PaintingSize {
-  label: string
-  cm: string
-  price: number
-}
-
-interface Painting {
-  id: number
-  name: string
-  style: string
-  image: string
-  description: string
-  sizes: PaintingSize[]
-}
-
-interface Plan {
-  id: number
-  name: string
-  price: number
-  tagline: string
-  paintings: string
-  gifts: string[]
-  highlight: boolean
-}
-
 interface BudgetForm {
   name: string
   email: string
@@ -47,130 +24,6 @@ interface BudgetForm {
   description: string
   budget: string
 }
-
-// ─── Data ─────────────────────────────────────────────────────────────────────
-
-const ART_STYLES = [
-  { id: 'pop', label: 'Pop Art', emoji: '🎭' },
-  { id: 'conceitual', label: 'Conceitual', emoji: '💭' },
-  { id: 'mbp', label: 'MBP', emoji: '✊' },
-  { id: 'cultura', label: 'Cultura', emoji: '🌍' },
-  { id: 'paisagem', label: 'Paisagem', emoji: '🏔️' },
-  { id: 'retrato', label: 'Retrato', emoji: '🎨' },
-  { id: 'abstrato', label: 'Abstrato', emoji: '🌀' },
-  { id: 'urbano', label: 'Arte Urbana', emoji: '🏙️' },
-]
-
-const plans: Plan[] = [
-  {
-    id: 1,
-    name: 'Pincelada',
-    price: 79.90,
-    tagline: 'Para quem quer começar a colecionar',
-    paintings: '1 pintura original por Vitório (30×40 cm)',
-    gifts: ['Chaveiro exclusivo do mês', 'Card assinado pelo artista', 'Certificado de autenticidade'],
-    highlight: false,
-  },
-  {
-    id: 2,
-    name: 'Traço Fino',
-    price: 129.90,
-    tagline: 'Mais arte, mais exclusividade',
-    paintings: '2 pinturas originais por Vitório (30×40 + 50×60 cm)',
-    gifts: ['Chaveiro exclusivo', 'Print premium assinado', 'Adesivos exclusivos', 'Card com dedicatória', 'Certificado de autenticidade'],
-    highlight: true,
-  },
-  {
-    id: 3,
-    name: 'Mestre da Cor',
-    price: 199.90,
-    tagline: 'A experiência completa do colecionador',
-    paintings: '3 pinturas originais por Vitório (incluindo obra 70×90 cm)',
-    gifts: ['Kit de brindes premium (5+ itens)', 'Chaveiro + pin exclusivo', 'Print grande emoldurado', 'Camiseta da coleção', 'Acesso a obras antes do lançamento', 'Certificado + moldura de brinde'],
-    highlight: false,
-  },
-]
-
-const paintings: Painting[] = [
-  {
-    id: 201,
-    name: 'Força das Cores',
-    style: 'Pop Art',
-    image: 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?w=600&h=600&fit=crop&auto=format',
-    description: 'Explosão cromática inspirada na cultura pop urbana. Acrílica sobre tela.',
-    sizes: [
-      { label: 'P', cm: '20×30 cm', price: 180 },
-      { label: 'M', cm: '30×40 cm', price: 280 },
-      { label: 'G', cm: '50×70 cm', price: 450 },
-      { label: 'GG', cm: '70×90 cm', price: 720 },
-    ],
-  },
-  {
-    id: 202,
-    name: 'Memória Viva',
-    style: 'Conceitual',
-    image: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&h=600&fit=crop&auto=format',
-    description: 'Camadas de significado sobre fragmentos da identidade coletiva. Óleo sobre tela.',
-    sizes: [
-      { label: 'P', cm: '20×30 cm', price: 220 },
-      { label: 'M', cm: '30×40 cm', price: 340 },
-      { label: 'G', cm: '50×70 cm', price: 520 },
-      { label: 'GG', cm: '70×90 cm', price: 840 },
-    ],
-  },
-  {
-    id: 203,
-    name: 'Raízes',
-    style: 'MBP',
-    image: 'https://images.unsplash.com/photo-1532640331846-d2da5987c3ee?w=600&h=600&fit=crop&auto=format',
-    description: 'Celebração da ancestralidade e resistência cultural. Técnica mista sobre tela.',
-    sizes: [
-      { label: 'P', cm: '20×30 cm', price: 200 },
-      { label: 'M', cm: '30×40 cm', price: 310 },
-      { label: 'G', cm: '50×70 cm', price: 490 },
-      { label: 'GG', cm: '70×90 cm', price: 780 },
-    ],
-  },
-  {
-    id: 204,
-    name: 'Horizonte Livre',
-    style: 'Paisagem',
-    image: 'https://images.unsplash.com/photo-1618331835717-801e976710b2?w=600&h=600&fit=crop&auto=format',
-    description: 'Paisagem expandida além do literal. Acrílica sobre tela de linho.',
-    sizes: [
-      { label: 'P', cm: '20×30 cm', price: 170 },
-      { label: 'M', cm: '30×40 cm', price: 260 },
-      { label: 'G', cm: '50×70 cm', price: 420 },
-      { label: 'GG', cm: '70×90 cm', price: 670 },
-    ],
-  },
-  {
-    id: 205,
-    name: 'Movimento',
-    style: 'Abstrato',
-    image: 'https://images.unsplash.com/photo-1531913764164-f85c52e6e654?w=600&h=600&fit=crop&auto=format',
-    description: 'Energia cinética capturada em pinceladas livres. Acrílica sobre tela.',
-    sizes: [
-      { label: 'P', cm: '20×30 cm', price: 190 },
-      { label: 'M', cm: '30×40 cm', price: 295 },
-      { label: 'G', cm: '50×70 cm', price: 460 },
-      { label: 'GG', cm: '70×90 cm', price: 730 },
-    ],
-  },
-  {
-    id: 206,
-    name: 'Território Cultural',
-    style: 'Cultura',
-    image: 'https://images.unsplash.com/photo-1618331833071-ce81bd50d300?w=600&h=600&fit=crop&auto=format',
-    description: 'Diálogo entre tradição e contemporaneidade. Óleo e acrílica sobre tela.',
-    sizes: [
-      { label: 'P', cm: '20×30 cm', price: 210 },
-      { label: 'M', cm: '30×40 cm', price: 325 },
-      { label: 'G', cm: '50×70 cm', price: 500 },
-      { label: 'GG', cm: '70×90 cm', price: 800 },
-    ],
-  },
-]
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -193,6 +46,8 @@ const WaveBg = ({ color = '#1a1a14', opacity = 0.07 }: { color?: string; opacity
 export default function App() {
   const [cart, setCart] = useState<CartItem[]>([])
   const [cartOpen, setCartOpen] = useState(false)
+  const [checkoutOpen, setCheckoutOpen] = useState(false)
+  const [paymentStatus, setPaymentStatus] = useState<'approved' | 'pending' | 'failure' | null>(null)
   const [activeSection, setActiveSection] = useState('inicio')
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -279,6 +134,15 @@ export default function App() {
     e.preventDefault()
     setBudgetSent(true)
   }
+
+  useEffect(() => {
+    const status = new URLSearchParams(window.location.search).get('status')
+    if (status === 'approved' || status === 'pending' || status === 'failure') {
+      setPaymentStatus(status)
+      if (status === 'approved') setCart([])
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+  }, [])
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -1047,7 +911,8 @@ export default function App() {
                   <span style={{ fontWeight: 700, color: '#4a4a3a', fontSize: '1rem' }}>Total</span>
                   <span style={{ fontFamily: "'Fredoka', sans-serif", fontSize: '1.7rem', color: '#c47832', fontWeight: 700 }}>{fmt(cartTotal)}</span>
                 </div>
-                <button className="w-full py-4 rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98]"
+                <button onClick={() => { setCartOpen(false); setCheckoutOpen(true) }}
+                  className="w-full py-4 rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98]"
                   style={{ background: '#2a3f24', color: '#f5f0e8', fontFamily: "'Fredoka', sans-serif", fontSize: '1.05rem' }}>
                   Finalizar Compra
                 </button>
@@ -1058,6 +923,40 @@ export default function App() {
                 </button>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* ── CHECKOUT MODAL ─────────────────────────────────────────────────── */}
+      {checkoutOpen && (
+        <CheckoutModal cart={cart} total={cartTotal} fmt={fmt} onClose={() => setCheckoutOpen(false)} />
+      )}
+
+      {/* ── PAYMENT STATUS BANNER ──────────────────────────────────────────── */}
+      {paymentStatus && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+          <div className="absolute inset-0" style={{ background: 'rgba(26,22,20,0.65)', backdropFilter: 'blur(6px)' }}
+            onClick={() => setPaymentStatus(null)} />
+          <div className="relative w-full max-w-md rounded-3xl shadow-2xl p-8 text-center space-y-4"
+            style={{ background: '#f5f0e8', border: '3px solid #2a3f24' }}>
+            <div className="text-6xl">
+              {paymentStatus === 'approved' ? '🎉' : paymentStatus === 'pending' ? '⏳' : '😕'}
+            </div>
+            <h3 style={{ fontFamily: "'Fredoka', sans-serif", fontSize: '1.7rem', color: '#1a1a14', fontWeight: 700 }}>
+              {paymentStatus === 'approved' && 'Pagamento aprovado!'}
+              {paymentStatus === 'pending' && 'Pagamento em análise'}
+              {paymentStatus === 'failure' && 'Pagamento não concluído'}
+            </h3>
+            <p style={{ color: '#4a4a3a', fontWeight: 600, fontSize: '0.92rem' }}>
+              {paymentStatus === 'approved' && 'Recebemos seu pagamento. Você vai receber a confirmação por e-mail em breve.'}
+              {paymentStatus === 'pending' && 'Assim que o pagamento (Pix/boleto) for confirmado, você receberá um e-mail.'}
+              {paymentStatus === 'failure' && 'Algo deu errado ao processar seu pagamento. Você pode tentar novamente.'}
+            </p>
+            <button onClick={() => setPaymentStatus(null)}
+              className="px-6 py-3 rounded-xl font-bold transition-all hover:scale-105"
+              style={{ background: '#2a3f24', color: '#f5f0e8', fontFamily: "'Fredoka', sans-serif" }}>
+              Fechar
+            </button>
           </div>
         </div>
       )}
