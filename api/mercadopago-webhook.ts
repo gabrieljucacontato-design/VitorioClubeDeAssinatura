@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node"
-import { getSupabaseAdmin, type OrderRow } from "./_lib/supabase"
-import { getPaymentClient } from "./_lib/mercadopago"
-import { notifyOwnerOfNewOrder } from "./_lib/resend"
+import { getSupabaseAdmin, type OrderRow } from "./_lib/supabase.js"
+import { getPaymentClient } from "./_lib/mercadopago.js"
+import { notifyOwnerOfNewOrder } from "./_lib/resend.js"
 
 const STATUS_MAP: Record<string, OrderRow["status"]> = {
   approved: "pago",

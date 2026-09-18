@@ -1,12 +1,12 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node"
 import { randomUUID } from "node:crypto"
-import { getSupabaseAdmin } from "./_lib/supabase"
-import { getPreferenceClient } from "./_lib/mercadopago"
-import { resolveCartItem } from "../src/data/catalog"
+import { getSupabaseAdmin } from "./_lib/supabase.js"
+import { getPreferenceClient } from "./_lib/mercadopago.js"
+import { resolveCartItem } from "../src/data/catalog.js"
 import type {
   CheckoutCustomer,
   CheckoutRequestBody,
-} from "../src/data/checkout-types"
+} from "../src/data/checkout-types.js"
 
 const REQUIRED_FIELDS: Array<keyof CheckoutCustomer> = [
   "name",

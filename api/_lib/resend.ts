@@ -1,5 +1,5 @@
 import { Resend } from "resend"
-import type { OrderRow } from "./supabase"
+import type { OrderRow } from "./supabase.js"
 
 let client: Resend | null = null
 

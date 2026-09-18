@@ -3,7 +3,7 @@ import {
   ADMIN_COOKIE_NAME,
   checkAdminPassword,
   createAdminSessionToken,
-} from "./_lib/adminAuth"
+} from "./_lib/adminAuth.js"
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
